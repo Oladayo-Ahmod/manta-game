@@ -1,3 +1,4 @@
+// test/ArcadeGame.test.js
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
@@ -5,14 +6,15 @@ describe("ArcadeGame", function () {
   let Token, token, ArcadeGame, arcadeGame, owner, addr1, addr2;
 
   beforeEach(async function () {
+    // Deploy the ERC20 token contract
     Token = await ethers.getContractFactory("ArcadeGameToken");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
-
     token = await Token.deploy();
     await token.deployed();
 
+    // Deploy the ArcadeGame contract
     ArcadeGame = await ethers.getContractFactory("ArcadeGame");
-    arcadeGame = await ArcadeGame.deploy(owner.address, token.address);
+    arcadeGame = await ArcadeGame.deploy(token.address, owner.address);
     await arcadeGame.deployed();
   });
 
