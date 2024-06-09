@@ -37,11 +37,17 @@ describe("ArcadeGame", function () {
     await token.transfer(addr1.address, ethers.utils.parseUnits("1000", 18));
     await token.connect(addr1).approve(arcadeGame.address, ethers.utils.parseUnits("100", 18));
 
-    await arcadeGame.connect(addr1).playGame(100);
-    await arcadeGame.connect(addr1).claimRewards();
-    const player = await arcadeGame.getPlayerDetails(addr1.address);
-    expect(player.rewards).to.equal(0);
-    expect(await token.balanceOf(addr1.address)).to.equal(ethers.utils.parseUnits("910", 18));
+    await arcadeGame.connect(addr1).playGame(100); // Play game and earn rewards
+    const playerBefore = await arcadeGame.getPlayerDetails(addr1.address);
+    expect(playerBefore.rewards).to.equal(10); // Ensure rewards are correct
+
+    await arcadeGame.connect(addr1).claimRewards(); // Claim rewards
+
+    const playerAfter = await arcadeGame.getPlayerDetails(addr1.address);
+    expect(playerAfter.rewards).to.equal(0); // Rewards should be reset to 0
+
+    const balanceAfter = await token.balanceOf(addr1.address);
+    expect(balanceAfter).to.equal(ethers.utils.parseUnits("910", 18).add(ethers.utils.parseUnits("10", 18))); // 910 tokens remaining + 10 tokens rewards
   });
 
   it("Should allow a player to purchase items", async function () {
