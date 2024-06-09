@@ -5,7 +5,7 @@ describe("ArcadeGame", function () {
   let Token, token, ArcadeGame, arcadeGame, owner, addr1, addr2;
 
   beforeEach(async function () {
-    Token = await ethers.getContractFactory("YourERC20Token");
+    Token = await ethers.getContractFactory("ArcadeGameToken");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
 
     token = await Token.deploy();
