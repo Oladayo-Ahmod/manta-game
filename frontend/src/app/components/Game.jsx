@@ -12,6 +12,7 @@ const Game = () => {
   const [signer, setSigner] = useState(null);
   const [tokenContract, setTokenContract] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [tokenBalance, setTokenBalance] = useState()
 
   useEffect(() => {
     const init = async () => {
@@ -27,6 +28,10 @@ const Game = () => {
         const playerAddress = await signer.getAddress();
         try {
           const player = await contract.getPlayerDetails(playerAddress);
+          let balance = await tokenContract.balanceOf(playerAddress);
+          balance = ethers.utils.formatUnits(balance.toString(),'ether')
+          balance = Math.round(balance)
+          setTokenBalance(balance);
           setPlayer(player);
         } catch (error) {
           console.error(error);
@@ -82,6 +87,7 @@ const Game = () => {
       <p>Score: {player.score.toString()}</p>
       <p>Rewards: {player.rewards.toString()}</p>
       <p>Level: {player.level.toString()}</p>
+      <p>Token balance : {`${tokenBalance} AGT`}</p>
       <button 
         className="bg-blue-500 p-2 rounded mt-4" 
         onClick={() => playGame(1000)} 

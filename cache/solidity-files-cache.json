@@ -625,8 +625,8 @@
       ]
     },
     "C:\\blockchain\\manta-game\\contracts\\ArcadeGame.sol": {
-      "lastModificationDate": 1718045926519,
-      "contentHash": "92d796e050575bae4ea166151a28e366",
+      "lastModificationDate": 1718055666481,
+      "contentHash": "453dffb2b25d80ce2fecb66ad9efbf1e",
       "sourceName": "contracts/ArcadeGame.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -766,8 +766,8 @@
       ]
     },
     "C:\\blockchain\\manta-game\\contracts\\ArcadeGameToken.sol": {
-      "lastModificationDate": 1717954988265,
-      "contentHash": "3f8f4fc1379b01ba8eacd214ce55ebbe",
+      "lastModificationDate": 1718056696193,
+      "contentHash": "5e7b505fb1f21f5658e7a23c6a7dd7b7",
       "sourceName": "contracts/ArcadeGameToken.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -801,7 +801,8 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
       ],
       "versionPragmas": [
         "^0.8.0"

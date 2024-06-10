@@ -43,7 +43,7 @@ contract ArcadeGame is ERC721, Ownable {
     ERC721("ArcadeGameToken", "AGT") 
     Ownable(_initialOwner) {
         token = IERC20(_token);
-        gameCost = 100 * 10**18; // Example cost in tokens
+        gameCost = 10 * 10**18; // Example cost in tokens
         levelUpScore = 1000; // Score needed to level up
         initialAirdropAmount = _initialAirdropAmount; // Initial airdrop amount for new players
     }
