@@ -24,9 +24,9 @@ module.exports = {
         localhost: {
             chainId: 31337,
         },
-        MANTATestnet: {
+        manta: {
             url: MANTA_TESTNET_RPC_URL,
-            chainId: 3636,
+            chainId: 3441006,
             accounts: [MANTA_TESTNET_PRIVATE_KEY]
         },
        
