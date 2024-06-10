@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { getWeb3 } from '../lib/web3';
 import { TOKEN_ADDRESS,TOKEN_ABI } from '../lib/deployedContracts';
+import { toast } from 'react-toastify';
 
 const Game = () => {
   const [player, setPlayer] = useState(null);
@@ -71,6 +72,10 @@ const Game = () => {
       const tx = await contract.playGame(score);
       await tx.wait();
       const updatedPlayer = await contract.players(await signer.getAddress());
+      let balance = await tokenContract.balanceOf(await signer.getAddress());
+      balance = ethers.utils.formatUnits(balance.toString(),'ether')
+      balance = Math.round(balance)
+      setTokenBalance(balance);
       setPlayer(updatedPlayer);
     } catch (error) {
       console.error(error);

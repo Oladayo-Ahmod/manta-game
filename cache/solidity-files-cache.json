@@ -625,8 +625,8 @@
       ]
     },
     "C:\\blockchain\\manta-game\\contracts\\ArcadeGame.sol": {
-      "lastModificationDate": 1718055666481,
-      "contentHash": "453dffb2b25d80ce2fecb66ad9efbf1e",
+      "lastModificationDate": 1718058066388,
+      "contentHash": "377f158ca088307684dc8f816d228b3d",
       "sourceName": "contracts/ArcadeGame.sol",
       "solcConfig": {
         "version": "0.8.20",
