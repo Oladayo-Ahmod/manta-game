@@ -46,9 +46,17 @@ contract ArcadeGame is ERC721, Ownable {
         levelUpScore = 1000; // Score needed to level up
     }
 
+    function initializePlayer(address playerAddress) public {
+        if (players[playerAddress].level == 0 && players[playerAddress].score == 0 && players[playerAddress].rewards == 0) {
+            players[playerAddress] = Player(0, 0, 1, new uint256[](0)); // Initialize player with default values
+        }
+    }
+
     function playGame(uint256 _score) public {
         require(token.balanceOf(msg.sender) >= gameCost, "Insufficient tokens to play");
         require(token.transferFrom(msg.sender, address(this), gameCost), "Token transfer failed");
+
+        initializePlayer(msg.sender); // Ensure player is initialized
 
         Player storage player = players[msg.sender];
         player.score += _score;
@@ -100,6 +108,7 @@ contract ArcadeGame is ERC721, Ownable {
     }
 
     function getPlayerDetails(address _player) external view returns (Player memory) {
+        require(players[_player].level != 0 || players[_player].score != 0 || players[_player].rewards != 0, "Player not initialized");
         return players[_player];
     }
 
