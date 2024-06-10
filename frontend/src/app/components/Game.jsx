@@ -24,12 +24,28 @@ const Game = () => {
         setSigner(signer);
         setContract(contract);
         setTokenContract(tokenContract);
-        const player = await contract.players(await signer.getAddress());
-        setPlayer(player);
+        const playerAddress = await signer.getAddress();
+        try {
+          const player = await contract.getPlayerDetails(playerAddress);
+          setPlayer(player);
+        } catch (error) {
+          console.error(error);
+          // Handle the case where player is not initialized
+          setPlayer(null);
+        }
+        
       }
     };
     init();
   }, []);
+
+  const initialize =async()=>{
+    const playerAddress = await signer.getAddress();
+    await contract.initializePlayer(playerAddress)
+    const player = await contract.getPlayerDetails(playerAddress);
+    setPlayer(player)
+    console.log(player,'here')
+  }
 
   const approveTokens = async (amount) => {
     setLoading(true);
@@ -57,7 +73,8 @@ const Game = () => {
     setLoading(false);
   };
 
-  if (!player) return <div>Loading...</div>;
+  if (!player) return <button className='bg-primary text-white font-bold py-2 px-4 rounded'
+   onClick={initialize}>Enter Game</button>;
 
   return (
     <div className="p-4 bg-white bg-opacity-75 rounded">

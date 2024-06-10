@@ -27,6 +27,7 @@ contract ArcadeGame is ERC721, Ownable {
     Counters.Counter private _nftIdCounter;
     uint256 public gameCost;
     uint256 public levelUpScore;
+    uint256 public initialAirdropAmount;
 
     mapping(address => Player) public players;
     mapping(uint256 => Item) public items;
@@ -38,17 +39,19 @@ contract ArcadeGame is ERC721, Ownable {
     event ItemPurchased(address indexed player, uint256 indexed itemId);
     event LevelUp(address indexed player, uint256 newLevel);
 
-    constructor(address _token, address _initialOwner) 
+    constructor(address _token, address _initialOwner, uint256 _initialAirdropAmount) 
     ERC721("ArcadeGameToken", "AGT") 
     Ownable(_initialOwner) {
         token = IERC20(_token);
         gameCost = 100 * 10**18; // Example cost in tokens
         levelUpScore = 1000; // Score needed to level up
+        initialAirdropAmount = _initialAirdropAmount; // Initial airdrop amount for new players
     }
 
     function initializePlayer(address playerAddress) public {
         if (players[playerAddress].level == 0 && players[playerAddress].score == 0 && players[playerAddress].rewards == 0) {
             players[playerAddress] = Player(0, 0, 1, new uint256[](0)); // Initialize player with default values
+            require(token.transfer(playerAddress, initialAirdropAmount), "Airdrop failed"); // Airdrop tokens to new player
         }
     }
 
@@ -129,5 +132,9 @@ contract ArcadeGame is ERC721, Ownable {
 
     function setLevelUpScore(uint256 _levelUpScore) external onlyOwner {
         levelUpScore = _levelUpScore;
+    }
+
+    function setInitialAirdropAmount(uint256 _initialAirdropAmount) external onlyOwner {
+        initialAirdropAmount = _initialAirdropAmount;
     }
 }
