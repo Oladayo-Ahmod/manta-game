@@ -12,8 +12,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="bg-cover bg-center min-h-screen" style={{ backgroundImage: "url('/background.jpg')" }}>
+      <body className={inter.className} >
+        <div className="bg-cover bg-center min-h-screen">
         <Header />
         <main className="container mx-auto p-4">{children}</main>
         </div>
