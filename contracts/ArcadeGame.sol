@@ -43,7 +43,7 @@ contract ArcadeGame is ERC721, Ownable {
     ERC721("ArcadeGameToken", "AGT") 
     Ownable(_initialOwner) {
         token = IERC20(_token);
-        gameCost = 10 * 10**18; // Example cost in tokens
+        gameCost = 10 * 10**18; // cost in tokens
         levelUpScore = 1000; // Score needed to level up
         initialAirdropAmount = _initialAirdropAmount; // Initial airdrop amount for new players
     }
@@ -63,7 +63,10 @@ contract ArcadeGame is ERC721, Ownable {
 
         Player storage player = players[msg.sender];
         player.score += _score;
-        player.rewards += _score / 10; // Example reward calculation
+
+        // Calculate a pseudo-random reward between 1 and 100
+        uint256 randomReward = (uint256(keccak256(abi.encodePacked(block.difficulty, block.timestamp, msg.sender))) % 100) + 1;
+        player.rewards += randomReward;
 
         if (player.score >= levelUpScore) {
             player.level++;
